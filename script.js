@@ -17,36 +17,25 @@ const scissors = {
     losesTo: "rock"
 }
 
-
-// Create a function to randomly select the computer's selection
-const choices = [rock, paper, scissors];  // An array for the options
+const choices = {
+    rock,
+    paper, 
+    scissors
+}
 
 function getComputerChoice() {
-    return choices[Math.floor(Math.random() * choices.length)]; // Math.floor rounds down to the largest integer, Math.random returns a random number between 0 and 1
+    // Math.floor rounds down to the largest integer, Math.random returns a random number between 0 and 1
+    const randomChoice = Object.keys(choices)[Math.floor(Math.random() * Object.keys(choices).length)]
+    return choices[randomChoice]; 
 }
 
 let computerSelection = getComputerChoice();
-console.log(computerSelection.value);
-
 
 // Get input from the user
 let playerChoice = prompt("Please enter your choice: Rock, Paper, or Scissors").toLowerCase();   // toLowerCase() function makes it case insensitive
-console.log(playerChoice);
 
-
-// Map the playerChoice variable to an object
-let playerSelection;    // Declare new variable
-
-if (playerChoice === "rock") {
-    playerSelection = rock;
-} else if (playerChoice === "paper") {
-    playerSelection = paper;
-} else if (playerChoice === "scissors") {
-    playerSelection = scissors;
-} else {
-    console.error("Invalid choice. Please enter Rocks, Paper, or Scissors.")
-}
-
+// Map the playerChoice variable (currently a string) to an object
+let playerSelection = choices[playerChoice]
 
 // Create a function that plays a single round of rock paper scissors
 function compareChoices(playerSelection, computerSelection) {
