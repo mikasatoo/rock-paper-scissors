@@ -50,6 +50,8 @@ if (playerScore > computerScore) {
     console.log(`You won the game! The final score is player: ${playerScore} to computer: ${computerScore}.`);
 } else if (playerScore < computerScore) {
     console.log(`You lost the game! The final score is player: ${playerScore} to computer: ${computerScore}.`);
+} else {
+    console.log(`You have tied! The final score is player: ${playerScore} to computer: ${computerScore}.`);
 }
 
 // Create a function to randomly select the computer's selection
