@@ -23,37 +23,6 @@ const choices = {
     scissors
 }
 
-// Set both scores to zero to begin with
-let playerScore = 0;
-let computerScore = 0;
-
-// Loop through the process 5 times (5 rounds per game)
-for (i = 1; i <= 5; i++) {
-    // Call the getComputerChoice() function
-    let computerSelection = getComputerChoice();
-
-    // Get input from the user and may the string to one of the above objects
-    let playerChoice = prompt("Please enter your choice: Rock, Paper, or Scissors").toLowerCase();   // toLowerCase() function makes it case insensitive
-    let playerSelection = choices[playerChoice]
-
-    // Call the compareChoices() function and keep track of the score
-    let winner = compareChoices(playerSelection, computerSelection);
-    if (winner === "player") {
-        playerScore += 1;
-    } else if (winner === "computer") {
-        computerScore += 1;
-    }
-}
-
-// At the end of the loop, print the overall winner and score
-if (playerScore > computerScore) {
-    console.log(`You won the game! The final score is player: ${playerScore} to computer: ${computerScore}.`);
-} else if (playerScore < computerScore) {
-    console.log(`You lost the game! The final score is player: ${playerScore} to computer: ${computerScore}.`);
-} else {
-    console.log(`You have tied! The final score is player: ${playerScore} to computer: ${computerScore}.`);
-}
-
 // Create a function to randomly select the computer's selection
 function getComputerChoice() {
     const randomChoice = Object.keys(choices)[Math.floor(Math.random() * Object.keys(choices).length)]  // Math.floor rounds down to the largest integer, Math.random returns a random number between 0 and 1
@@ -61,17 +30,76 @@ function getComputerChoice() {
 }
 
 // Create a function that plays a single round of rock paper scissors
-function compareChoices(playerSelection, computerSelection) {
+function playRound(playerSelection, computerSelection) {
     let winner;
     if (playerSelection.beats === computerSelection.value) {
-        console.log(`You win! ${playerSelection.value} beats ${computerSelection.value} :)`);
         winner = "player";
     } else if (playerSelection.losesTo === computerSelection.value) {
-        console.log(`You lose! ${computerSelection.value} beats ${playerSelection.value} :(`);
         winner = "computer";
     } else {
-        console.log("You have tied! :o");
+        winner = "";
     }
-    // debugger
     return winner;
 }
+
+// Get reference to "results-output" div
+const resultsOutput = document.querySelector(".results-output");
+
+// Create new div elements stored in the roundResult, score, and finalResult variables
+let roundResult = document.createElement("div");
+let score = document.createElement("div");
+let finalResult = document.createElement("div");
+finalResult.classList.add("finalResult");
+
+// Set both scores to zero to begin with
+let playerScore = 0;
+let computerScore = 0;
+
+// Add event listeners to each button within the "choice-buttons" class ancestor
+const choiceButtons = document.querySelectorAll(".choice-buttons button");
+
+choiceButtons.forEach((choiceButton) => {
+    choiceButton.addEventListener('click', () => {
+        // match choiceButton id to one of the choices objects
+        let playerChoice = choiceButton.id;
+        let playerSelection = choices[playerChoice];
+        let capPlayerSelection = playerSelection.value.charAt(0).toUpperCase() + playerSelection.value.slice(1);
+
+        // call the getComputerChoice() function
+        let computerSelection = getComputerChoice();
+        let capComputerSelection = computerSelection.value.charAt(0).toUpperCase() + computerSelection.value.slice(1);
+
+        // call the playRound() function - set roundResult text content and track the score
+        let winner = playRound(playerSelection, computerSelection);
+        if (winner === "player") {
+            roundResult.textContent = `You win this round! ${capPlayerSelection} (you) beats ${computerSelection.value} (computer) :)`;
+            playerScore += 1;
+        } else if (winner === "computer") {
+            roundResult.textContent = `You lose this round! ${capComputerSelection} (computer) beats ${playerSelection.value} (you) :(`;
+            computerScore += 1;
+        } else {
+            roundResult.textContent = "You tied this round! :o";
+        }
+
+        // set score text content
+        score.textContent = `The score is player: ${playerScore} to computer: ${computerScore}`;
+
+        // append roundResult and score to results-output div
+        resultsOutput.appendChild(roundResult);
+        resultsOutput.appendChild(score);
+
+        // if either score reaches 5, then set finalResult text content and append to results-output div
+        if (playerScore === 5 || computerScore === 5) {
+            if (playerScore === 5) {
+                finalResult.textContent = "Yay! You won the game. Want to play again?";
+            } else if (computerScore === 5) {
+                finalResult.textContent = "Too bad! You lost the game. Want to try again?";
+            };
+            resultsOutput.appendChild(finalResult);
+            
+            // removeEventListener on the choiceButtons (so player can't continue clicking them)
+            // create "Play again" button that appears below - create a separate event listener that resets score and removes results / score divs
+            // ...
+        };
+    });
+});

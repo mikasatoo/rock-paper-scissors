@@ -1,0 +1,125 @@
+body {
+    font-family: 'Courier New', Arial;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* header div */
+.header {
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
+    padding: 10px;
+    min-height: 50px;
+}
+
+/* play div */
+.play {
+    display: flex;
+    flex-direction: column;
+    min-height: 200px;
+}
+
+/* h2 element in the play div */
+.play h2 {
+    margin-block-start: 0px;
+    margin-block-end: 0px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+}
+
+/* instructions div */
+.play .instructions {
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px 20px;
+}
+
+/* p elements (in instructions div)*/
+p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* choice-buttons div */
+.play .choice-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+/* img elements */
+img {
+    height: 100px;
+    width: auto;
+}
+
+/* button elements */
+button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    margin: 10px;
+    width: 131.8px;
+    font-family: 'Courier New', Arial;
+    font-size: 16px;
+    /* background-color: white; */
+    border-radius: 10px;
+}
+
+/* results div */
+.results {
+    display: flex;
+    flex-direction: column;
+    /* min-height: 200px; */
+    background-color: grey;
+    color: white;
+}
+
+/* h2 element in the results div */
+.results h2 {
+    margin-block-start: 0px;
+    margin-block-end: 0px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+}
+
+/* results-output div */
+.results .results-output {
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px 20px;
+}
+
+/* div elements (in results-output div)*/
+.results .results-output div {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* finalResult div (in results-output div)*/
+.results .results-output .finalResult {
+    color: blue;
+}

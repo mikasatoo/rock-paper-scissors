@@ -1,2 +1,44 @@
-<!-- Link to the external .js file -->
-<script src="./script.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Rock Paper Scissors</title>
+        <script src="./script.js" defer></script>   <!-- link to external .js file -->
+        <link rel="stylesheet" href="./styles.css"/>  <!-- link to external .css file -->
+        <link rel="shortcut icon" type="image/x-icon" href="./images/scissors.png"/>    <!-- link to icon image -->
+    </head>
+
+    <body>
+        <!-- Header -->
+        <div class="header">
+            <h1>Rock Paper Scissors</h1>
+        </div>
+
+        <!-- Play -->
+        <div class="play">
+            <h2>Play</h2>
+
+            <div class="instructions">
+                <p>Choose your fighter from the options below</p>
+                <p>The first to <b>5 points</b> wins!</p>
+            </div>
+
+            <div class="choice-buttons">
+                <button id="rock"><img src="./images/rock.png">Rock</button>
+                <button id="paper"><img src="./images/paper.png">Paper</button>
+                <button id="scissors"><img src="./images/scissors.png">Scissors</button>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div class="results">
+            <h2>Results</h2>
+
+            <div class="results-output">
+            </div>
+        </div>
+
+        <!-- Footer? -->
+    </body>
+</html>
