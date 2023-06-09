@@ -42,15 +42,14 @@ function playRound(playerSelection, computerSelection) {
     return winner;
 }
 
-// Get reference to "results-output" div
+// Get reference to elements
 const resultsOutput = document.querySelector(".results-output");
+const results = document.querySelector(".results");
+const playerScoreValue = document.querySelector("#player-score-value");
+const computerScoreValue = document.querySelector("#computer-score-value");
+const finalResult = document.querySelector(".final-result");
 
-// Create new div elements stored in the roundResult, score, and finalResult variables
-// + a button element stored in the playAgain variable
-let roundResult = document.createElement("div");
-let score = document.createElement("div");
-let finalResult = document.createElement("div");
-finalResult.setAttribute("id", "finalResult");
+// Create a button element stored in the playAgain variable
 let playAgain = document.createElement("button");
 playAgain.setAttribute("id", "playAgain");
 playAgain.classList.add("button-hover");
@@ -58,6 +57,8 @@ playAgain.classList.add("button-hover");
 // Set both scores to zero to begin with
 let playerScore = 0;
 let computerScore = 0;
+playerScoreValue.textContent = `${playerScore}`;
+computerScoreValue.textContent = `${computerScore}`;
 
 // Create playerChoice variable
 let playerChoice;
@@ -72,24 +73,21 @@ function getResults(playerChoice) {
     let computerSelection = getComputerChoice();
     let capComputerSelection = computerSelection.value.charAt(0).toUpperCase() + computerSelection.value.slice(1);
 
-    // call the playRound() function - set roundResult text content and track the score
+    // call the playRound() function - set resultsOutput text content and track the score
     let winner = playRound(playerSelection, computerSelection);
     if (winner === "player") {
-        roundResult.textContent = `You win this round! ${capPlayerSelection} (you) beats ${computerSelection.value} (computer) :)`;
+        resultsOutput.textContent = `You win this round! ${capPlayerSelection} (you) beats ${computerSelection.value} (computer)`;
         playerScore += 1;
     } else if (winner === "computer") {
-        roundResult.textContent = `You lose this round! ${capComputerSelection} (computer) beats ${playerSelection.value} (you) :(`;
+        resultsOutput.textContent = `You lose this round! ${capComputerSelection} (computer) beats ${playerSelection.value} (you)`;
         computerScore += 1;
     } else {
-        roundResult.textContent = "You tied this round! :o";
+        resultsOutput.textContent = "You tied this round!";
     }
 
-    // set score text content
-    score.textContent = `The score is player: ${playerScore} to computer: ${computerScore}`;
-
-    // append roundResult and score to results-output div
-    resultsOutput.appendChild(roundResult);
-    resultsOutput.appendChild(score);
+    // set score values' text content
+    playerScoreValue.textContent = `${playerScore}`;
+    computerScoreValue.textContent = `${computerScore}`;
 
     // if either score has reached 5, then call the getFinalResult() function
     if (playerScore === 5 || computerScore === 5) {
@@ -107,8 +105,7 @@ function getFinalResult() {
         playAgain.textContent = "Want to try again?"
     };
 
-    resultsOutput.appendChild(finalResult);
-    resultsOutput.appendChild(playAgain);
+    results.appendChild(playAgain);
 
     // toggle button-hover class off for the choice buttons
     choiceButtons.forEach((choiceButton) => {
@@ -121,12 +118,13 @@ function resetGame() {
     // reset scores
     playerScore = 0;
     computerScore = 0;
+    playerScoreValue.textContent = `${playerScore}`;
+    computerScoreValue.textContent = `${computerScore}`;
 
-    // remove roundResult, score, and finalResult divs and this playAgain button
-    resultsOutput.removeChild(roundResult);
-    resultsOutput.removeChild(score);
-    resultsOutput.removeChild(finalResult);
-    resultsOutput.removeChild(playAgain);
+    // reset roundResult and finalResult divs and remove playAgain button
+    resultsOutput.textContent = "";
+    finalResult.textContent = "";
+    results.removeChild(playAgain);
 
     // toggle button-hover class back on for the choice buttons
     choiceButtons.forEach((choiceButton) => {
@@ -138,10 +136,10 @@ function resetGame() {
 const choiceButtons = document.querySelectorAll(".choice-buttons button");
 
 choiceButtons.forEach((choiceButton) => {
-    choiceButton.addEventListener("click", function(e) {
-        // if the finalResult div does not exist, call the getResults() function
+    choiceButton.addEventListener("click", function eventHandler() {
+        // if the finalResult div is empty, call the getResults() function
         // else, remove the event listener
-        if (document.getElementById("finalResult") === null) {
+        if (finalResult.textContent === "") {
             getResults(choiceButton.id);    // need to provide value of playerChoice variable
         } else {
             choiceButton.removeEventListener("click", eventHandler);
