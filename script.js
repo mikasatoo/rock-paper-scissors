@@ -48,6 +48,7 @@ const results = document.querySelector(".results");
 const playerScoreValue = document.querySelector("#player-score-value");
 const computerScoreValue = document.querySelector("#computer-score-value");
 const finalResult = document.querySelector(".final-result");
+const choiceButtons = document.querySelectorAll(".choice-buttons button");
 
 // Create a button element stored in the playAgain variable
 let playAgain = document.createElement("button");
@@ -67,7 +68,7 @@ let playerChoice;
 function getResults(playerChoice) {
     // match event id to one of the choices objects
     let playerSelection = choices[playerChoice];
-    let capPlayerSelection = playerSelection.value.charAt(0).toUpperCase() + playerSelection.value.slice(1);
+    let capPlayerSelection = playerSelection.value.charAt(0).toUpperCase() + playerSelection.value.slice(1);    // create a function called capitalize...
 
     // call the getComputerChoice() function
     let computerSelection = getComputerChoice();
@@ -93,6 +94,22 @@ function getResults(playerChoice) {
     if (playerScore === 5 || computerScore === 5) {
         getFinalResult();
     }
+}
+
+function makeChoicesClickable() {
+    const choiceButtons = document.querySelectorAll(".choice-buttons button");
+
+    choiceButtons.forEach((choiceButton) => {
+        choiceButton.addEventListener("click", function eventHandler() {
+            // if the finalResult div is empty, call the getResults() function
+            // else, remove the event listener
+            if (finalResult.textContent === "") {
+                getResults(choiceButton.id);    // need to provide value of playerChoice variable
+            } else {
+                choiceButton.removeEventListener("click", eventHandler);
+            }
+        });
+    });
 }
 
 // Create a function that gives the final result and option to play again (once a score of 5 is reached)
@@ -126,26 +143,16 @@ function resetGame() {
     finalResult.textContent = "";
     results.removeChild(playAgain);
 
+    // 
+    makeChoicesClickable();
+
     // toggle button-hover class back on for the choice buttons
     choiceButtons.forEach((choiceButton) => {
-    choiceButton.classList.toggle("button-hover");
+        choiceButton.classList.toggle("button-hover");
     });
 }
 
-// Add event listeners to each button within the "choice-buttons" class ancestor
-const choiceButtons = document.querySelectorAll(".choice-buttons button");
-
-choiceButtons.forEach((choiceButton) => {
-    choiceButton.addEventListener("click", function eventHandler() {
-        // if the finalResult div is empty, call the getResults() function
-        // else, remove the event listener
-        if (finalResult.textContent === "") {
-            getResults(choiceButton.id);    // need to provide value of playerChoice variable
-        } else {
-            choiceButton.removeEventListener("click", eventHandler);
-        }
-    });
-});
+makeChoicesClickable()
 
 // Add event listener to the playAgain button that calls the resetGame() function
 // (need to use event delegation since the playAgain button is dynamically created)
