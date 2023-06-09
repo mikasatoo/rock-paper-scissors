@@ -46,60 +46,115 @@ function playRound(playerSelection, computerSelection) {
 const resultsOutput = document.querySelector(".results-output");
 
 // Create new div elements stored in the roundResult, score, and finalResult variables
+// + a button element stored in the playAgain variable
 let roundResult = document.createElement("div");
 let score = document.createElement("div");
 let finalResult = document.createElement("div");
-finalResult.classList.add("finalResult");
+finalResult.setAttribute("id", "finalResult");
+let playAgain = document.createElement("button");
+playAgain.setAttribute("id", "playAgain");
+playAgain.classList.add("button-hover");
 
 // Set both scores to zero to begin with
 let playerScore = 0;
 let computerScore = 0;
 
+// Create playerChoice variable
+let playerChoice;
+
+// Create a function that gives the results of each round
+function getResults(playerChoice) {
+    // match event id to one of the choices objects
+    let playerSelection = choices[playerChoice];
+    let capPlayerSelection = playerSelection.value.charAt(0).toUpperCase() + playerSelection.value.slice(1);
+
+    // call the getComputerChoice() function
+    let computerSelection = getComputerChoice();
+    let capComputerSelection = computerSelection.value.charAt(0).toUpperCase() + computerSelection.value.slice(1);
+
+    // call the playRound() function - set roundResult text content and track the score
+    let winner = playRound(playerSelection, computerSelection);
+    if (winner === "player") {
+        roundResult.textContent = `You win this round! ${capPlayerSelection} (you) beats ${computerSelection.value} (computer) :)`;
+        playerScore += 1;
+    } else if (winner === "computer") {
+        roundResult.textContent = `You lose this round! ${capComputerSelection} (computer) beats ${playerSelection.value} (you) :(`;
+        computerScore += 1;
+    } else {
+        roundResult.textContent = "You tied this round! :o";
+    }
+
+    // set score text content
+    score.textContent = `The score is player: ${playerScore} to computer: ${computerScore}`;
+
+    // append roundResult and score to results-output div
+    resultsOutput.appendChild(roundResult);
+    resultsOutput.appendChild(score);
+
+    // if either score has reached 5, then call the getFinalResult() function
+    if (playerScore === 5 || computerScore === 5) {
+        getFinalResult();
+    }
+}
+
+// Create a function that gives the final result and option to play again (once a score of 5 is reached)
+function getFinalResult() {
+    if (playerScore === 5) {
+        finalResult.textContent = "Yay! You won the game 😃";
+        playAgain.textContent = "Want to play again?";
+    } else if (computerScore === 5) {
+        finalResult.textContent = "Too bad! You lost the game 🙁";
+        playAgain.textContent = "Want to try again?"
+    };
+
+    resultsOutput.appendChild(finalResult);
+    resultsOutput.appendChild(playAgain);
+
+    // toggle button-hover class off for the choice buttons
+    choiceButtons.forEach((choiceButton) => {
+        choiceButton.classList.toggle("button-hover");
+    });
+}
+
+// Create function that resets the game
+function resetGame() {
+    // reset scores
+    playerScore = 0;
+    computerScore = 0;
+
+    // remove roundResult, score, and finalResult divs and this playAgain button
+    resultsOutput.removeChild(roundResult);
+    resultsOutput.removeChild(score);
+    resultsOutput.removeChild(finalResult);
+    resultsOutput.removeChild(playAgain);
+
+    // toggle button-hover class back on for the choice buttons
+    choiceButtons.forEach((choiceButton) => {
+    choiceButton.classList.toggle("button-hover");
+    });
+}
+
 // Add event listeners to each button within the "choice-buttons" class ancestor
 const choiceButtons = document.querySelectorAll(".choice-buttons button");
 
 choiceButtons.forEach((choiceButton) => {
-    choiceButton.addEventListener('click', () => {
-        // match choiceButton id to one of the choices objects
-        let playerChoice = choiceButton.id;
-        let playerSelection = choices[playerChoice];
-        let capPlayerSelection = playerSelection.value.charAt(0).toUpperCase() + playerSelection.value.slice(1);
-
-        // call the getComputerChoice() function
-        let computerSelection = getComputerChoice();
-        let capComputerSelection = computerSelection.value.charAt(0).toUpperCase() + computerSelection.value.slice(1);
-
-        // call the playRound() function - set roundResult text content and track the score
-        let winner = playRound(playerSelection, computerSelection);
-        if (winner === "player") {
-            roundResult.textContent = `You win this round! ${capPlayerSelection} (you) beats ${computerSelection.value} (computer) :)`;
-            playerScore += 1;
-        } else if (winner === "computer") {
-            roundResult.textContent = `You lose this round! ${capComputerSelection} (computer) beats ${playerSelection.value} (you) :(`;
-            computerScore += 1;
+    choiceButton.addEventListener("click", function(e) {
+        // if the finalResult div does not exist, call the getResults() function
+        // else, remove the event listener
+        if (document.getElementById("finalResult") === null) {
+            getResults(choiceButton.id);    // need to provide value of playerChoice variable
         } else {
-            roundResult.textContent = "You tied this round! :o";
+            choiceButton.removeEventListener("click", eventHandler);
         }
-
-        // set score text content
-        score.textContent = `The score is player: ${playerScore} to computer: ${computerScore}`;
-
-        // append roundResult and score to results-output div
-        resultsOutput.appendChild(roundResult);
-        resultsOutput.appendChild(score);
-
-        // if either score reaches 5, then set finalResult text content and append to results-output div
-        if (playerScore === 5 || computerScore === 5) {
-            if (playerScore === 5) {
-                finalResult.textContent = "Yay! You won the game. Want to play again?";
-            } else if (computerScore === 5) {
-                finalResult.textContent = "Too bad! You lost the game. Want to try again?";
-            };
-            resultsOutput.appendChild(finalResult);
-            
-            // removeEventListener on the choiceButtons (so player can't continue clicking them)
-            // create "Play again" button that appears below - create a separate event listener that resets score and removes results / score divs
-            // ...
-        };
     });
+});
+
+// Add event listener to the playAgain button that calls the resetGame() function
+// (need to use event delegation since the playAgain button is dynamically created)
+document.addEventListener("click", function(e) {
+    const target = e.target.closest("#playAgain");
+
+    if (target) {
+        resetGame();
+    }
 });
