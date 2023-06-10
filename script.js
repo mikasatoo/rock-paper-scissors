@@ -69,15 +69,23 @@ computerImg.setAttribute("src", "./images/question.png");
 // Create playerChoice variable
 let playerChoice;
 
+// Create a function to capitalize the first letter of the choice
+function capitalizeFirstLetter(string) {
+    let capitalizedChoice;
+    return capitalizedChoice = string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 // Create a function that gives the results of each round
 function getResults(playerChoice) {
     // match event id to one of the choices objects
     let playerSelection = choices[playerChoice];
-    let capPlayerSelection = playerSelection.value.charAt(0).toUpperCase() + playerSelection.value.slice(1);    // create a function called capitalize...
+    // call the capitalizeFirstLetter() function
+    let capPlayerSelection = capitalizeFirstLetter(playerSelection.value);
 
     // call the getComputerChoice() function
     let computerSelection = getComputerChoice();
-    let capComputerSelection = computerSelection.value.charAt(0).toUpperCase() + computerSelection.value.slice(1);
+    // call the capitalizeFirstLetter() function
+    let capComputerSelection = capitalizeFirstLetter(computerSelection.value);
 
     // update src attribute for images
     playerImg.setAttribute("src", `./images/${playerSelection.value}.png`);
