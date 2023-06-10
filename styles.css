@@ -123,8 +123,9 @@ button {
 
 /* button hover states */
 button.button-hover:hover {
-    transition-duration: 0.4s;
+    transition-duration: 250ms;
     cursor: pointer;
+    transform: scale(1.1); /* translateY(-10px); */
 }
 button.button-hover#rock:hover {
     background-color: #ffc09f;
