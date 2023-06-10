@@ -1,16 +1,7 @@
-# rock-paper-scissors
+# Rock Paper Scissors Game
 
-scissors.png source:
-Scissors by Maciej Świerczek from <a href="https://thenounproject.com/browse/icons/term/scissors/" target="_blank" title="Scissors Icons">Noun Project</a>
+Created using HTML, CSS, and JavaScript
 
-noun-game.png source:
-Game by Adrien Coquet from <a href="https://thenounproject.com/browse/icons/term/game/" target="_blank" title="Game Icons">Noun Project</a>
+Live preview at: https://mikasatoo.github.io/rock-paper-scissors/
 
-paper.png source:
-Paper by Maciej Świerczek from <a href="https://thenounproject.com/browse/icons/term/paper/" target="_blank" title="Paper Icons">Noun Project</a>
-
-rock.png source:
-Hand rock by Maciej Świerczek from <a href="https://thenounproject.com/browse/icons/term/hand-rock/" target="_blank" title="Hand rock Icons">Noun Project</a>
-
-question.png source:
-question mark by Suncheli Project from <a href="https://thenounproject.com/browse/icons/term/question-mark/" target="_blank" title="question mark Icons">Noun Project</a>
+✂️👍
