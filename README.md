@@ -11,3 +11,6 @@ Paper by Maciej Świerczek from <a href="https://thenounproject.com/browse/icons
 
 rock.png source:
 Hand rock by Maciej Świerczek from <a href="https://thenounproject.com/browse/icons/term/hand-rock/" target="_blank" title="Hand rock Icons">Noun Project</a>
+
+question.png source:
+question mark by Suncheli Project from <a href="https://thenounproject.com/browse/icons/term/question-mark/" target="_blank" title="question mark Icons">Noun Project</a>

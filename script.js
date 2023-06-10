@@ -43,23 +43,28 @@ function playRound(playerSelection, computerSelection) {
 }
 
 // Get reference to elements
-const resultsOutput = document.querySelector(".results-output");
+const resultsOutput = document.querySelector(".results h2");
 const results = document.querySelector(".results");
 const playerScoreValue = document.querySelector("#player-score-value");
 const computerScoreValue = document.querySelector("#computer-score-value");
 const finalResult = document.querySelector(".final-result");
 const choiceButtons = document.querySelectorAll(".choice-buttons button");
+const playerImg = document.querySelector("#player-img");
+const computerImg = document.querySelector("#computer-img");
 
 // Create a button element stored in the playAgain variable
 let playAgain = document.createElement("button");
 playAgain.setAttribute("id", "playAgain");
 playAgain.classList.add("button-hover");
 
-// Set both scores to zero to begin with
+// Set default values
 let playerScore = 0;
 let computerScore = 0;
 playerScoreValue.textContent = `${playerScore}`;
 computerScoreValue.textContent = `${computerScore}`;
+resultsOutput.textContent = "Results";
+playerImg.setAttribute("src", "./images/question.png");
+computerImg.setAttribute("src", "./images/question.png");
 
 // Create playerChoice variable
 let playerChoice;
@@ -74,16 +79,20 @@ function getResults(playerChoice) {
     let computerSelection = getComputerChoice();
     let capComputerSelection = computerSelection.value.charAt(0).toUpperCase() + computerSelection.value.slice(1);
 
+    // update src attribute for images
+    playerImg.setAttribute("src", `./images/${playerSelection.value}.png`);
+    computerImg.setAttribute("src", `./images/${computerSelection.value}.png`);
+
     // call the playRound() function - set resultsOutput text content and track the score
     let winner = playRound(playerSelection, computerSelection);
     if (winner === "player") {
-        resultsOutput.textContent = `You win this round! ${capPlayerSelection} (you) beats ${computerSelection.value} (computer)`;
+        resultsOutput.textContent = `You win! ${capPlayerSelection} beats ${computerSelection.value}`;
         playerScore += 1;
     } else if (winner === "computer") {
-        resultsOutput.textContent = `You lose this round! ${capComputerSelection} (computer) beats ${playerSelection.value} (you)`;
+        resultsOutput.textContent = `You lose! ${capComputerSelection} beats ${playerSelection.value}`;
         computerScore += 1;
     } else {
-        resultsOutput.textContent = "You tied this round!";
+        resultsOutput.textContent = "It's a tie!";
     }
 
     // set score values' text content
@@ -96,6 +105,7 @@ function getResults(playerChoice) {
     }
 }
 
+// Create a function that adds an event listener to the choiceButtons
 function makeChoicesClickable() {
     const choiceButtons = document.querySelectorAll(".choice-buttons button");
 
@@ -139,11 +149,15 @@ function resetGame() {
     computerScoreValue.textContent = `${computerScore}`;
 
     // reset roundResult and finalResult divs and remove playAgain button
-    resultsOutput.textContent = "";
+    resultsOutput.textContent = "Results";
     finalResult.textContent = "";
     results.removeChild(playAgain);
 
-    // 
+    // change images back to question marks
+    playerImg.setAttribute("src", "./images/question.png");
+    computerImg.setAttribute("src", "./images/question.png");
+
+    // call the makeChoicesClickable() function again
     makeChoicesClickable();
 
     // toggle button-hover class back on for the choice buttons
@@ -152,7 +166,8 @@ function resetGame() {
     });
 }
 
-makeChoicesClickable()
+// Call the makeChoicesClickable function to begin
+makeChoicesClickable();
 
 // Add event listener to the playAgain button that calls the resetGame() function
 // (need to use event delegation since the playAgain button is dynamically created)

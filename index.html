@@ -7,6 +7,7 @@
         <script src="./script.js" defer></script>   <!-- link to external .js file -->
         <link rel="stylesheet" href="./styles.css"/>  <!-- link to external .css file -->
         <link rel="shortcut icon" type="image/x-icon" href="./images/scissors.png"/>    <!-- link to icon image -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- link to GitHub icon source -->
     </head>
 
     <body>
@@ -18,11 +19,10 @@
 
             <!-- Play -->
             <div class="play">
-                <h2>Let's play!</h2>
+                <h2>Choose your weapon</h2>
 
                 <div class="instructions">
-                    <p>The first to <b>5 points</b> wins!</p>
-                    <p><b>Pick your weapon:</b></p>
+                    <p>First to <b>5 points</b> wins!</p>
                 </div>
 
                 <div class="choice-buttons">
@@ -34,22 +34,32 @@
 
             <!-- Results -->
             <div class="results">
-                <h2>Results</h2>
-
-                <div class="results-output"></div>
+                <h2 class="results-output"></h2>
 
                 <div class="scoreboard">
-                    <div class="player-score">
-                        <div><b>Player</b></div>
-                        <div id="player-score-value"></div>
+                    <div class="player">
+                        <img id="player-img">
+                        <div id="player-score">
+                            <div><b>Player: </b></div>
+                            <div id="player-score-value"></div>
+                        </div>
                     </div>
-                    <div class="computer-score">
-                        <div><b>Computer</b></div>
-                        <div id="computer-score-value"></div>
+                    <div class="computer">
+                        <img id="computer-img">
+                        <div id="computer-score">
+                            <div><b>Computer: </b></div>
+                            <div id="computer-score-value"></div>
+                        </div>
+                        
                     </div>
                 </div>
 
                 <div class="final-result"></div>
+            </div>
+
+            <div class="footer">
+                <p>Copyright © 2023 mikasatoo</p>
+                <a href="https://github.com/mikasatoo" target="_blank"><i style="font-size:24px" class="fa">&#xf09b;</i></a>
             </div>
         </div>
     </body>
